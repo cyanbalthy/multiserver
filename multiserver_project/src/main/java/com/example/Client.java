@@ -12,7 +12,7 @@ public class Client{
     BufferedReader inDalServer;                  //stream di input
     DataOutputStream outVersoServer;                //stream di output
 
-    protected Socket connetti (){
+    public Socket connetti (){
         try{
             //input da tastiera
             tastiera = new BufferedReader(new InputStreamReader(System.in));
@@ -32,23 +32,27 @@ public class Client{
     }
 
     public void comunica(){
-        try{
-            System.out.println("4 ... inserisci la stringa da trasmettere al server");
-            stringaUtente = tastiera.readLine();  
-            //la spedisco al server
-            System.out.println("5 ... invio la stringa al server e attendo");
-            outVersoServer.writeBytes(stringaUtente + '\n');  
-            //leggo la risposta dal server
-            stringaRicevutaDalServer=inDalServer.readLine();
-            System.out.println("8 ... risposta dal server"+'\n'+stringaRicevutaDalServer);
-            //chiudo la connessione
-            System.out.println("9 ... termina elaborazione e chiude connessione");
-            mioSocket.close();
-        }catch(Exception e){
-            System.out.println(e.getMessage()); //messaggio errore
-            System.out.println(" errore durante la comunicazione col server");
-            System.exit(1);
-        }
+        for(;;){
+            try{
+                System.out.println("4 ... inserisci la stringa da trasmettere al server");
+                stringaUtente = tastiera.readLine();  
+                //la spedisco al server
+                System.out.println("5 ... invio la stringa al server e attendo");
+                outVersoServer.writeBytes(stringaUtente + '\n');  
+                //leggo la risposta dal server
+                stringaRicevutaDalServer=inDalServer.readLine();
+                System.out.println("8 ... risposta dal server"+'\n'+stringaRicevutaDalServer);
+                if(stringaUtente.equals("FINE")){
+                    System.out.println("8 CLIENT: termina elaborazione e chiude connesione");
+                    mioSocket.close();
+                    break;
+                }
+            }catch(Exception e){
+                System.out.println(e.getMessage()); //messaggio errore
+                System.out.println(" errore durante la comunicazione col server");
+                System.exit(1);
+            }
     }
+}   
 
 }
