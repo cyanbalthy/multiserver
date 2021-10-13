@@ -11,6 +11,7 @@ public class Client{
     String stringaRicevutaDalServer;
     BufferedReader inDalServer;                  //stream di input
     DataOutputStream outVersoServer;                //stream di output
+    Boolean isStopped=false;
 
     public Socket connetti (){
         try{
@@ -42,10 +43,15 @@ public class Client{
                 //leggo la risposta dal server
                 stringaRicevutaDalServer=inDalServer.readLine();
                 System.out.println("8 ... risposta dal server"+'\n'+stringaRicevutaDalServer);
-                if(stringaUtente.equals("FINE")){
-                    System.out.println("8 CLIENT: termina elaborazione e chiude connesione");
-                    mioSocket.close();
-                    break;
+                if(stringaUtente.equals("FINE") || stringaUtente.equals("STOP")){
+                    if(isStopped){
+                        break;
+                    }else{
+                        System.out.println("8 CLIENT: termina elaborazione e chiude connesione");
+                        mioSocket.close();
+                        isStopped=true;
+                        break;
+                    }
                 }
             }catch(Exception e){
                 System.out.println(e.getMessage()); //messaggio errore
