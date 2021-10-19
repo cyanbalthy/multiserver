@@ -8,7 +8,7 @@ public class MainClient
 {
     public static void main( String[] args )
     {
-        Client cliente = new Client();
+        MultiClient cliente = new MultiClient();
         cliente.connetti();
         cliente.comunica();
     }

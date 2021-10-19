@@ -6,7 +6,7 @@ import java.util.ArrayList;
 
 public class MultiServer {
 
-    List<ServerThread> threadList = new ArrayList();
+    List<ServerThread> threadList = new ArrayList<>();
     ServerSocket serverSocket=null;
 
     public void start(){
